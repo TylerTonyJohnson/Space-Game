@@ -10,7 +10,7 @@ const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
   0.1,
-  1000
+  10000
 );
 
 const renderer = new THREE.WebGLRenderer({
@@ -66,9 +66,17 @@ function addStar() {
 
 Array(200).fill().forEach(addStar);
 
-// Space background
-const spaceTexture = new THREE.TextureLoader().load("assets/space.png");
-scene.background = spaceTexture;
+// // Space background
+// const spaceTexture = new THREE.TextureLoader().load("assets/space.png");
+// scene.background = spaceTexture;
+
+const skyboxTexture = new THREE.TextureLoader().load("assets/skybox.jpg");
+const skybox = new THREE.Mesh(
+  new THREE.SphereGeometry(1000, 24, 24),
+  new THREE.MeshBasicMaterial({ map: skyboxTexture, side: THREE.BackSide })
+);
+
+scene.add(skybox);
 
 // Avatar
 const tylerTexture = new THREE.TextureLoader().load("assets/cube.png");
