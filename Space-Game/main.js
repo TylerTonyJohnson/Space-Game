@@ -4,6 +4,8 @@ import * as THREE from "three";
 
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(
@@ -79,35 +81,82 @@ const skybox = new THREE.Mesh(
 scene.add(skybox);
 
 // Avatar
-const tylerTexture = new THREE.TextureLoader().load("assets/cube.png");
-const tyler = new THREE.Mesh(
-  new THREE.BoxGeometry(3, 3, 3),
-  new THREE.MeshBasicMaterial({
-    map: tylerTexture,
-  })
-);
+// const tylerTexture = new THREE.TextureLoader().load("assets/cube.png");
+// const tyler = new THREE.Mesh(
+//   new THREE.BoxGeometry(3, 3, 3),
+//   new THREE.MeshBasicMaterial({
+//     map: tylerTexture,
+//   })
+// );
 
-scene.add(tyler);
+// scene.add(tyler);
 
 // Planet
-const planetTexture = new THREE.TextureLoader().load("assets/planet.png");
-const normalMap = new THREE.TextureLoader().load("assets/NormalMap.png");
-const specularMap = new THREE.TextureLoader().load("assets/SpecularMap.png");
-const displacementMap = new THREE.TextureLoader().load(
-  "assets/DisplacementMap.png"
-);
+// const planetTexture = new THREE.TextureLoader().load("assets/planet.png");
+// const normalMap = new THREE.TextureLoader().load("assets/NormalMap.png");
+// const specularMap = new THREE.TextureLoader().load("assets/SpecularMap.png");
+// const displacementMap = new THREE.TextureLoader().load(
+//   "assets/DisplacementMap.png"
+// );
 
-const planet = new THREE.Mesh(
-  new THREE.SphereGeometry(3, 32, 32),
-  new THREE.MeshStandardMaterial({
-    map: planetTexture,
-    displacementMap: displacementMap,
-    normalMap: normalMap,
-    roughness: specularMap,
+// const planet = new THREE.Mesh(
+//   new THREE.SphereGeometry(3, 32, 32),
+//   new THREE.MeshStandardMaterial({
+//     map: planetTexture,
+//     displacementMap: displacementMap,
+//     normalMap: normalMap,
+//     roughness: specularMap,
+//   })
+// );
+
+// scene.add(planet);
+
+// Gold Sphere
+// const loader = new GLTFLoader();
+// let sphereMesh;
+
+// const colorMap = new THREE.TextureLoader().load("assets/Metal Sphere Diffuse.jpg");
+// loader.load('assets/Golden Sphere.glb', (glb) => {
+//   sphereMesh = glb.scene;
+//   // sphereMesh.map = colorMap;
+//   // sphereMesh.position.x = 20;
+//   scene.add(sphereMesh);
+// });
+
+addSphere(scene);
+
+function addSphere(scene) {
+  const goldSphereMap = new THREE.TextureLoader().load(`assets\Metal Sphere Diffuse.jpg`);
+  goldSphereMap.encoding = THREE.sRGBEncoding;
+  // const goldSphereMaterial = new THREE.MeshStandardMaterial({
+  //   map: goldSphereMap
+  // });
+
+
+  let goldSphereMesh;
+  const loader = new GLTFLoader();
+  loader.load(`assets/Golden Sphere.glb`, (glb) => {
+    goldSphereMesh = glb.scene;
+
+
+    // goldSphereMesh.material = goldSphereMaterial;
+    // goldSphereMesh.material = new THREE.MeshBasicMaterial();
+    // goldSphereMesh.material.map = goldSphereMap;
+    scene.add(goldSphereMesh);
   })
-);
 
-scene.add(planet);
+
+  // const goldSphereGeometry = new Promise(resolve => {
+  //   loader.load(`assets/Golden Sphere.glb`, geometry => {
+  //     resolve(geometry);
+  //   })
+  // })
+
+  // const goldSphere = new THREE.Mesh(goldSphereMesh, goldSphereMaterial);
+
+}
+
+
 
 function animate() {
   requestAnimationFrame(animate);
